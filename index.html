@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Excuse Generator 3000</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            .excuse {
+                margin: 20px;
+                padding: 20px;
+                background-color: #f0f0f0;
+                border-radius: 10px;
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 18px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                margin: 10px;
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            /* Loader styles */
+            .loader {
+                border: 8px solid #f3f3f3;
+                border-top: 8px solid #3498db;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 2s linear infinite;
+                margin: 20px auto;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .hidden {
+                display: none;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Excuse Generator 3000</h1>
+        <p>Need a hilarious excuse? Press the button below to get a random excuse!</p>
+
+        <!-- Loader that is hidden by default -->
+        <div class="loader hidden" id="loader"></div>
+
+        <!-- Excuse section -->
+        <div class="excuse" id="excuse">Your excuse will appear here!</div>
+        <button onclick="getExcuse()">Generate Excuse</button>
+
+        <script>
+            async function getExcuse () {
+                // Show the loader
+                document.getElementById('loader').classList.remove('hidden');
+                document.getElementById('excuse').innerHTML = '';
+
+                // Fetch the excuse from the Excuser API
+                const response = await fetch('https://excuser-three.vercel.app/v1/excuse/funny');
+                const data = await response.json();
+
+                // Hide the loader
+                document.getElementById('loader').classList.add('hidden');
+
+                // Display the excuse
+                document.getElementById('excuse').innerHTML = data[0].excuse;
+            }
+        </script>
+
+    </body>
+
+</html>
